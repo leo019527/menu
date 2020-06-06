@@ -48,11 +48,19 @@ def test():
     res = {"msg": test}
     return flask.jsonify(res)
 
+@server.route('/restart', methods=['get'])
+def restart():
+    global menus,materials
+    menus = []
+    materials = []
+    readAll()
+    return "ok"
 
-@server.route('/addMenu', methods=['get'])
+
+@server.route('/addmenu', methods=['get'])
 def addMenu():
     name = flask.request.values.get('name')
-    materialLine = flask.request.values.get('materialLine')
+    materialLine = flask.request.values.get('materialline')
     desc = flask.request.values.get('desc')
     mtype = flask.request.values.get('type')
     f = addMenua(name, materialLine, desc, mtype)
@@ -62,19 +70,19 @@ def addMenu():
         return flask.jsonify({"msg": u"菜单重复"})
 
 
-@server.route('/getMenus', methods=['get'])
+@server.route('/getmenus', methods=['get'])
 def getMenus():
     global menus
     return flask.jsonify({"result": menus})
 
 
-@server.route('/getMaterial', methods=['get'])
+@server.route('/getmaterial', methods=['get'])
 def getMaterial():
     global materials
     return flask.jsonify({"result": materials})
 
 
-@server.route('/getMeals', methods=['get'])
+@server.route('/getmeals', methods=['get'])
 def getMeals():
     return flask.jsonify(randomWeek())
 
